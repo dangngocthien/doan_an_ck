@@ -1,26 +1,55 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Nền & chữ chung của trang */
+  --background: #f2f4f8;
+  --foreground: #131f2b;
+
+  /* Token giao diện admin (v2: xanh thép + hổ phách, nền xám lạnh, thẻ trắng) */
+  --color-surface: #f2f4f8; /* nền khu vực nội dung, hover/active */
+  --color-border: #e7eaee;
+  --color-text: #131f2b;
+  --color-text-muted: #6b7785;
+  --color-primary: #0f4c81; /* xanh thép — nút chính */
+  --color-primary-hover: #0b3b65;
+  --color-primary-soft: #e9f1fa; /* nền nhạt: mục đang chọn, vòng focus */
+  --color-accent: #f2a33a; /* hổ phách — chỉ làm điểm nhấn */
+  --color-accent-soft: #fff3df;
+  --color-danger: #b3261e;
+  --color-danger-bg: #fbe9e7;
+
+  /* Màu nhãn trạng thái (dùng ở đợt 3) */
+  --color-info: #2563eb;
+  --color-info-bg: #e8effe;
+  --color-work: #0e7490;
+  --color-work-bg: #e0f4f8;
+  --color-ok: #15803d;
+  --color-ok-bg: #e5f6ea;
+  --color-off: #6b7785;
+  --color-off-bg: #eef0f3;
+  --color-warn-text: #9a5b00;
+
+  /* Đổ bóng thẻ */
+  --shadow-card: 0 1px 0 #fff inset, 0 1px 2px rgba(19, 31, 43, 0.05),
+    0 16px 36px -18px rgba(19, 31, 43, 0.16);
+
+  /* GIỮ LẠI token sidebar cũ: khu Thợ có thể còn dùng. Sidebar Admin mới không dùng nữa */
+  --color-sidebar-bg: #0f3d63;
+  --color-sidebar-border: #0a2c49;
+  --color-sidebar-text: #b7c9db;
+  --color-sidebar-text-active: #ffffff;
+  --color-sidebar-active-bg: rgba(255, 255, 255, 0.08);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-be-vietnam), system-ui, sans-serif;
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
 }

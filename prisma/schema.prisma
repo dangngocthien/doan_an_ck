@@ -1,0 +1,182 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+datasource db {
+  provider = "mysql"
+}
+
+// ------------------------------------------------------------
+// Enums (khớp với ENUM trong schema.sql)
+// ------------------------------------------------------------
+enum VaiTro {
+  ADMIN
+  THO
+}
+
+enum MucDoUuTien {
+  THAP
+  TRUNG_BINH
+  CAO
+}
+
+enum TrangThaiPhieuViec {
+  MOI
+  DANG_DI
+  DANG_LAM
+  HOAN_THANH
+  DA_HUY
+}
+
+enum LoaiAnh {
+  TRUOC
+  SAU
+}
+
+enum TrangThaiThanhToan {
+  DA_THU
+  CON_NO
+}
+
+// ------------------------------------------------------------
+// 1. Người dùng (Admin / Thợ)
+// ------------------------------------------------------------
+model NguoiDung {
+  id             Int      @id @default(autoincrement()) @db.UnsignedInt
+  ten            String   @db.VarChar(100)
+  sdt            String   @db.VarChar(20)
+  email          String   @unique @db.VarChar(150)
+  mat_khau_hash  String   @db.VarChar(255)
+  vai_tro        VaiTro
+  dang_hoat_dong Boolean  @default(true)
+  created_at     DateTime @default(now())
+
+  // Nhà thợ (chỉ Thợ có). Server tự tra vi_do/kinh_do từ dia_chi khi Admin lưu.
+  // null = chưa nhập địa chỉ hoặc chưa tra được → thợ xếp cuối khi gợi ý thợ gần.
+  dia_chi             String?  @db.VarChar(191)
+  vi_do               Float?
+  kinh_do             Float?
+  // Không còn dùng (từng dành cho thợ chia sẻ GPS, đã bỏ); chưa xóa cột
+  vi_tri_cap_nhat_luc DateTime?
+
+  phieu_viec PhieuViec[] @relation("ThoPhuTrach")
+
+  @@map("nguoi_dung")
+}
+
+// ------------------------------------------------------------
+// 2. Khách hàng
+// ------------------------------------------------------------
+model KhachHang {
+  id         Int      @id @default(autoincrement()) @db.UnsignedInt
+  ten        String   @db.VarChar(100)
+  sdt        String   @db.VarChar(20)
+  dia_chi    String   @db.VarChar(255)
+  dang_hoat_dong Boolean @default(true)
+  created_at DateTime @default(now())
+
+  phieu_viec PhieuViec[]
+
+  @@index([sdt])
+  @@map("khach_hang")
+}
+
+// ------------------------------------------------------------
+// 3. Phiếu việc (Work Order) — bảng trung tâm
+// ------------------------------------------------------------
+model PhieuViec {
+  id              Int                @id @default(autoincrement()) @db.UnsignedInt
+  khach_hang_id   Int                @db.UnsignedInt
+  tho_id          Int?               @db.UnsignedInt
+  loai_su_co      String             @db.VarChar(150)
+  muc_do_uu_tien  MucDoUuTien        @default(TRUNG_BINH)
+  trang_thai      TrangThaiPhieuViec @default(MOI)
+  dia_chi         String             @db.VarChar(255)
+  ghi_chu         String?            @db.Text
+  ngay_tao        DateTime           @default(now())
+  ngay_hoan_thanh DateTime?
+  khong_dung_vat_tu Boolean          @default(false)
+
+  khach_hang KhachHang @relation(fields: [khach_hang_id], references: [id], onDelete: Restrict)
+  tho        NguoiDung? @relation("ThoPhuTrach", fields: [tho_id], references: [id], onDelete: SetNull)
+
+  anh_phieu_viec  AnhPhieuViec[]
+  vat_tu_su_dung  VatTuSuDung[]
+  hoa_don         HoaDon?
+
+  // Điểm sự cố: tự tra từ dia_chi khi tạo phiếu (null = chưa xác định được)
+   vi_do    Float?
+   kinh_do  Float?
+
+  @@index([trang_thai])
+  @@index([tho_id])
+  @@index([khach_hang_id])
+  @@map("phieu_viec")
+}
+
+// ------------------------------------------------------------
+// 4. Ảnh phiếu việc (trước / sau khi sửa)
+// ------------------------------------------------------------
+model AnhPhieuViec {
+  id            Int      @id @default(autoincrement()) @db.UnsignedInt
+  phieu_viec_id Int      @db.UnsignedInt
+  loai          LoaiAnh
+  url           String   @db.VarChar(255)
+  uploaded_at   DateTime @default(now())
+
+  phieu_viec PhieuViec @relation(fields: [phieu_viec_id], references: [id], onDelete: Cascade)
+
+  @@index([phieu_viec_id])
+  @@map("anh_phieu_viec")
+}
+
+// ------------------------------------------------------------
+// 5. Vật tư (danh mục + tồn kho)
+// ------------------------------------------------------------
+model VatTu {
+  id           Int     @id @default(autoincrement()) @db.UnsignedInt
+  ten          String  @db.VarChar(150)
+  don_vi       String  @db.VarChar(30)
+  so_luong_ton Int     @default(0)
+  gia          Decimal @default(0) @db.Decimal(12, 2)
+  dang_hoat_dong Boolean @default(true)
+
+  vat_tu_su_dung VatTuSuDung[]
+
+  @@map("vat_tu")
+}
+
+// ------------------------------------------------------------
+// 6. Vật tư sử dụng theo từng phiếu việc
+// ------------------------------------------------------------
+model VatTuSuDung {
+  id            Int @id @default(autoincrement()) @db.UnsignedInt
+  phieu_viec_id Int @db.UnsignedInt
+  vat_tu_id     Int @db.UnsignedInt
+  so_luong      Int
+
+  phieu_viec PhieuViec @relation(fields: [phieu_viec_id], references: [id], onDelete: Cascade)
+  vat_tu     VatTu     @relation(fields: [vat_tu_id], references: [id], onDelete: Restrict)
+
+  @@index([phieu_viec_id])
+  @@index([vat_tu_id])
+  @@map("vat_tu_su_dung")
+}
+
+// ------------------------------------------------------------
+// 7. Hóa đơn (1 phiếu việc = 1 hóa đơn)
+// ------------------------------------------------------------
+model HoaDon {
+  id                    Int                @id @default(autoincrement()) @db.UnsignedInt
+  phieu_viec_id         Int                @unique @db.UnsignedInt
+  tien_cong             Decimal            @default(0) @db.Decimal(12, 2)
+  tien_vat_tu           Decimal            @default(0) @db.Decimal(12, 2)
+  tong_tien             Decimal            @default(0) @db.Decimal(12, 2)
+  trang_thai_thanh_toan TrangThaiThanhToan @default(CON_NO)
+  ngay_lap              DateTime           @default(now())
+
+  phieu_viec PhieuViec @relation(fields: [phieu_viec_id], references: [id], onDelete: Cascade)
+
+  @@index([trang_thai_thanh_toan])
+  @@map("hoa_don")
+}
