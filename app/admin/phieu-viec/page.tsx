@@ -232,7 +232,7 @@ export default async function DanhSachPhieuViecPage({
                     </TableCell>
                     <TableCell>{hienNgay(pv.ngay_tao)}</TableCell>
                     <TableCell>{hienNgay(pv.ngay_hoan_thanh)}</TableCell>
-                    <TableCell className="text-right">
+                    <TableCell className="whitespace-nowrap text-right">
                       <div className="flex justify-end gap-2">
                         <Link
                           href={`/admin/phieu-viec/${pv.id}`}
