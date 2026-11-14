@@ -9,7 +9,7 @@ export default function PhieuViecTrongHopThoai({
   params: Promise<{ id: string }>;
 }) {
   return (
-    <HopThoai>
+    <HopThoai tieuDe="Chi tiết phiếu việc">
       <SuaPhieuViecPage params={params} />
     </HopThoai>
   );

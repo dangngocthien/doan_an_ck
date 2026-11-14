@@ -166,7 +166,7 @@ export default async function DanhSachKhachHangPage({
                       <span className="text-[var(--color-text-muted)]">—</span>
                     )}
                   </TableCell>
-                  <TableCell className="text-right">
+                  <TableCell className="whitespace-nowrap text-right">
                     <div className="flex items-center justify-end gap-2">
                       <Link
                         href={`/admin/khach-hang/${kh.id}`}

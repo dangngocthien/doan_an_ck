@@ -6,7 +6,16 @@ import { X } from "lucide-react";
 
 // Hộp thoại phủ lên trang hiện tại. Đóng bằng router.back() để URL và lịch sử trình duyệt luôn khớp
 // với những gì đang hiển thị (nút Quay lại của trình duyệt cũng đóng được hộp thoại).
-export default function HopThoai({ children }: { children: React.ReactNode }) {
+// tieuDe: tên hộp thoại cho trình đọc màn hình. rong: độ rộng tối đa (class Tailwind), mặc định max-w-2xl.
+export default function HopThoai({
+  tieuDe,
+  rong = "max-w-2xl",
+  children,
+}: {
+  tieuDe: string;
+  rong?: string;
+  children: React.ReactNode;
+}) {
   const router = useRouter();
 
   // Nhấn Esc để đóng
@@ -24,10 +33,10 @@ export default function HopThoai({ children }: { children: React.ReactNode }) {
       onClick={() => router.back()}
       role="dialog"
       aria-modal="true"
-      aria-label="Chi tiết phiếu việc"
+      aria-label={tieuDe}
     >
       <div
-        className="max-h-[90vh] w-full max-w-2xl overflow-y-auto overscroll-contain rounded-2xl bg-[var(--color-surface)] p-4 shadow-2xl"
+        className={`max-h-[90vh] w-full ${rong} overflow-y-auto overscroll-contain rounded-2xl bg-[var(--color-surface)] p-4 shadow-2xl`}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Chiều cao 0 + sticky: nút Đóng nằm ở góc trên phải và luôn hiện khi cuộn */}
