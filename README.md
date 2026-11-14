@@ -65,7 +65,7 @@ Tiền tố `/api/v1`, đăng nhập bằng cookie session NextAuth (không có 
 
 ## Tiến độ (cập nhật 14/11/2026)
 **Đã xong:** toàn bộ module nghiệp vụ, kiểm thử thủ công end-to-end, service layer, bộ lọc và phân trang, xuất Excel/PDF, gợi ý thợ gần nhất, REST API, giao diện v2 (dùng được trên điện thoại ~375px), rà soát lộ dữ liệu.
-**Mới:** popup Xem/Sửa thay trang riêng ở Admin cho phiếu việc, khách hàng, thợ. Chưa làm cho vật tư và hóa đơn.
+**Mới:** popup Xem/Sửa thay trang riêng ở Admin cho phiếu việc, khách hàng, thợ, hóa đơn (lập và chi tiết), vật tư. Các trang "Thêm mới" vẫn là trang đầy đủ.
 **Còn lại:** viết báo cáo cuối kỳ.
 
 **Việc treo (chỉ làm khi cần):**

@@ -170,7 +170,7 @@ export default async function TrangDanhSachHoaDon({
                         ? p.ngay_hoan_thanh.toLocaleDateString("vi-VN")
                         : "—"}
                     </TableCell>
-                    <TableCell className="text-right">
+                    <TableCell className="whitespace-nowrap text-right">
                       <Link
                         href={`/admin/hoa-don/lap/${p.id}`}
                         className={buttonVariants({ size: "sm" })}
@@ -237,7 +237,7 @@ export default async function TrangDanhSachHoaDon({
                     <TableCell>
                       <NhanThanhToan trangThai={h.trang_thai_thanh_toan} />
                     </TableCell>
-                    <TableCell className="text-right">
+                    <TableCell className="whitespace-nowrap text-right">
                       <Link
                         href={`/admin/hoa-don/${h.id}`}
                         className={buttonVariants({

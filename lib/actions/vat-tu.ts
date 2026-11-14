@@ -1,6 +1,6 @@
 "use server";
 
-import { redirect } from "next/navigation";
+import { redirect, RedirectType } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { auth } from "@/auth";
 import { LoiNghiepVu } from "@/lib/services/loi-nghiep-vu";
@@ -37,7 +37,8 @@ export async function taoVatTu(
   }
 
   revalidatePath("/admin/vat-tu");
-  redirect("/admin/vat-tu"); // ngoài try/catch vì redirect hoạt động bằng cách ném lỗi
+  // replace: khi lưu từ hộp thoại, tránh để lại bước "popup" trong lịch sử trình duyệt.
+  redirect("/admin/vat-tu", RedirectType.replace); // ngoài try/catch vì redirect hoạt động bằng cách ném lỗi
 }
 
 export async function capNhatVatTu(
@@ -59,5 +60,5 @@ export async function capNhatVatTu(
   }
 
   revalidatePath("/admin/vat-tu");
-  redirect("/admin/vat-tu");
+  redirect("/admin/vat-tu", RedirectType.replace);
 }

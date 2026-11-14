@@ -150,7 +150,7 @@ export default async function DanhSachVatTuPage({
                 <TableCell>
                   {Number(vt.gia).toLocaleString("vi-VN")} ₫
                 </TableCell>
-                <TableCell className="text-right">
+                <TableCell className="whitespace-nowrap text-right">
                   <div className="flex justify-end gap-2">
                     <Link
                       href={`/admin/vat-tu/${vt.id}`}
