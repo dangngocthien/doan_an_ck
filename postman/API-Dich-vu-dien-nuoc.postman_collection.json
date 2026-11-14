@@ -1,0 +1,1104 @@
+{
+  "info": {
+    "_postman_id": "bb1b026e-f0b4-4d7b-a89c-3833df6a9ccf",
+    "name": "API Dich vu dien nuoc",
+    "description": "### Welcome to Postman! This is your first collection. \n\nCollections are your starting point for building and testing APIs. You can use this one to:\n\n• Group related requests\n• Test your API in real-world scenarios\n• Document and share your requests\n\nUpdate the name and overview whenever you’re ready to make it yours.\n\n[Learn more about Postman Collections.](https://learning.postman.com/docs/collections/collections-overview/)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "59208038",
+    "_collection_link": "https://go.postman.co/collection/59208038-bb1b026e-f0b4-4d7b-a89c-3833df6a9ccf?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "1. Dang nhap - lay csrf",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\n    pm.response.to.have.status(200);\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/csrf",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "csrf"
+          ]
+        },
+        "description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+      },
+      "response": []
+    },
+    {
+      "name": "2. Dang nhap - Admin",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Successful POST request\", function () {\n    pm.expect(pm.response.code).to.be.oneOf([200, 201]);\n});\n"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "csrfToken",
+              "value": "273a5122ed8cc0c636d12f4866671d924214d646cc7674ec883aab5b123f1abf"
+            },
+            {
+              "key": "email",
+              "value": "admin.dienthuy@gmail.com"
+            },
+            {
+              "key": "password",
+              "value": "admin123"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/callback/credentials",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "callback",
+            "credentials"
+          ]
+        },
+        "description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+      },
+      "response": []
+    },
+    {
+      "name": "2b. Dang nhap - Tho",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Successful POST request\", function () {\n    pm.expect(pm.response.code).to.be.oneOf([200, 201]);\n});\n"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "csrfToken",
+              "value": "a57bf425ed3ea2cedb933ef52ac6de0b00feb71b211c392aba90f939eeb55675"
+            },
+            {
+              "key": "email",
+              "value": "voducthinh@gmail.com"
+            },
+            {
+              "key": "password",
+              "value": "tho123"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/callback/credentials",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "callback",
+            "credentials"
+          ]
+        },
+        "description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+      },
+      "response": []
+    },
+    {
+      "name": "3. Me",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/me",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "me"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "4. Phieu viec - Admin danh sach",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/phieu-viec",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "phieu-viec"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "5. Phieu viec - loc sai (400)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/phieu-viec?trang_thai=ABC",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "phieu-viec"
+          ],
+          "query": [
+            {
+              "key": "trang_thai",
+              "value": "ABC"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "6. Phieu viec - id sai (400)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/phieu-viec/abc",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "phieu-viec",
+            "abc"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "7. Phieu viec - khong ton tai (404)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/phieu-viec/999999",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "phieu-viec",
+            "999999"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "8. Phieu viec - trang 999",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/phieu-viec?trang=999",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "phieu-viec"
+          ],
+          "query": [
+            {
+              "key": "trang",
+              "value": "999"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "9. Vat tu - Admin mac dinh",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/vat-tu",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "vat-tu"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "10. Vat tu - Admin tat ca",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/vat-tu?trang_thai=tat_ca",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "vat-tu"
+          ],
+          "query": [
+            {
+              "key": "trang_thai",
+              "value": "tat_ca"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "11. Phieu viec - Tho danh sach",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/phieu-viec",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "phieu-viec"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "12. Phieu viec - Tho xem phieu cua minh",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/phieu-viec/36",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "phieu-viec",
+            "36"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "13. Phieu viec - Tho xem phieu nguoi khac (403)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/phieu-viec/7",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "phieu-viec",
+            "7"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "14. Hoa don - Tho bi chan (403)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/hoa-don",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "hoa-don"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "15. Vat tu - Tho",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/vat-tu",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "vat-tu"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "16 Ghi vat tu",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"vat_tu_id\": 4, \"so_luong\": 2 }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/phieu-viec/4/vat-tu",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "phieu-viec",
+            "4",
+            "vat-tu"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "17. Phieu viec - Tho xem phieu 4",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/phieu-viec/4",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "phieu-viec",
+            "4"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "18. Ghi vat tu - so_luong chuoi",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"vat_tu_id\": 4, \"so_luong\": \"2\" }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/phieu-viec/4/vat-tu",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "phieu-viec",
+            "4",
+            "vat-tu"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "19. Ghi vat tu - so_luong bang 0",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"vat_tu_id\": 4, \"so_luong\": 0 }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/phieu-viec/4/vat-tu",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "phieu-viec",
+            "4",
+            "vat-tu"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "20. Ghi vat tu - so_luong am",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"vat_tu_id\": 4, \"so_luong\": -1 }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/phieu-viec/4/vat-tu",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "phieu-viec",
+            "4",
+            "vat-tu"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "21. Ghi vat tu - het ton (409)",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"vat_tu_id\": 8, \"so_luong\": 1 }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/phieu-viec/4/vat-tu",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "phieu-viec",
+            "4",
+            "vat-tu"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "22. Ghi vat tu - phieu khong DANG_LAM (409)",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"vat_tu_id\": 3, \"so_luong\": 1 }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/phieu-viec/8/vat-tu",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "phieu-viec",
+            "8",
+            "vat-tu"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "22b. Ghi vat tu - phieu HOAN_THANH (409)",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"vat_tu_id\": 3, \"so_luong\": 1 }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/phieu-viec/31/vat-tu",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "phieu-viec",
+            "31",
+            "vat-tu"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "23. Ghi vat tu - phieu tho khac",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"vat_tu_id\": 3, \"so_luong\": 1 }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/phieu-viec/7/vat-tu",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "phieu-viec",
+            "7",
+            "vat-tu"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "24. Xoa vat tu - dong 62 (200)",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/phieu-viec/4/vat-tu/62",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "phieu-viec",
+            "4",
+            "vat-tu",
+            "62"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "25. Xoa vat tu - xoa lan 2 (404)",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/phieu-viec/4/vat-tu/62",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "phieu-viec",
+            "4",
+            "vat-tu",
+            "62"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "26. Khong dung vat tu - da co vat tu (409)",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"gia_tri\": true }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/phieu-viec/4/khong-dung-vat-tu",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "phieu-viec",
+            "4",
+            "khong-dung-vat-tu"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "27. Khong dung vat tu - gia_tri chuoi (400)",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"gia_tri\": \"true\" }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/phieu-viec/4/khong-dung-vat-tu",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "phieu-viec",
+            "4",
+            "khong-dung-vat-tu"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "28. Chuyen trang thai - tu_trang_thai sai (400)",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"tu_trang_thai\": \"ABC\" }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/phieu-viec/8/chuyen-trang-thai",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "phieu-viec",
+            "8",
+            "chuyen-trang-thai"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "29. Chuyen trang thai - lech trang thai (409)",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"tu_trang_thai\": \"DANG_LAM\" }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/phieu-viec/8/chuyen-trang-thai",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "phieu-viec",
+            "8",
+            "chuyen-trang-thai"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "30. Chuyen trang thai - MOI sang DANG_DI (200)",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"tu_trang_thai\": \"MOI\" }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/phieu-viec/8/chuyen-trang-thai",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "phieu-viec",
+            "8",
+            "chuyen-trang-thai"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "31. Chuyen trang thai - thieu anh truoc (409)",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"tu_trang_thai\": \"DANG_DI\" }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/phieu-viec/8/chuyen-trang-thai",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "phieu-viec",
+            "8",
+            "chuyen-trang-thai"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "32. Chuyen trang thai - phieu tho khac (403)",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/phieu-viec/7/chuyen-trang-thai",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "phieu-viec",
+            "7",
+            "chuyen-trang-thai"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "33. Tao phieu viec - khach co san (201)",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "  {\"che_do_khach\":\"co_san\",\"khach_hang_id\":1,\"loai_su_co\":\"Ro ri ong nuoc\",\"muc_do_uu_tien\":\"TRUNG_BINH\",\"dia_chi\":\"12 Nguyen Trai, Quan 5, TP.HCM\",\"ghi_chu\":\"Test API\",\"tho_id\":3}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/phieu-viec",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "phieu-viec"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "34. Tao phieu viec - khach moi thieu dia chi khach (400)",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "  {\"che_do_khach\":\"moi\",\"khach_ten\":\"Nguyen Van Test\",\"khach_sdt\":\"0901234567\",\"loai_su_co\":\"Mat dien\",\"muc_do_uu_tien\":\"CAO\",\"dia_chi\":\"45 Le Loi, Quan 1, TP.HCM\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/phieu-viec",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "phieu-viec"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "35. Tao phieu viec - tho_id vuot INT (400)",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "  {\"che_do_khach\":\"co_san\",\"khach_hang_id\":1,\"loai_su_co\":\"Ro ri ong nuoc\",\"muc_do_uu_tien\":\"TRUNG_BINH\",\"dia_chi\":\"12 Nguyen Trai, Quan 5, TP.HCM\",\"tho_id\":3000000000}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/phieu-viec",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "phieu-viec"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "36. Doi trang thai thanh toan - sang da thu (200)",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "  {\"trang_thai_thanh_toan\":\"DA_THU\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/hoa-don/1/thanh-toan",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "hoa-don",
+            "1",
+            "thanh-toan"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "37. Doi trang thai thanh toan - hoa don khong ton tai (404)",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"trang_thai_thanh_toan\":\"DA_THU\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/hoa-don/99999/thanh-toan",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "hoa-don",
+            "99999",
+            "thanh-toan"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "38. Doi trang thai thanh toan - trang thai sai (400)",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"trang_thai_thanh_toan\":\"DA_HUY\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/hoa-don/1/thanh-toan",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "hoa-don",
+            "1",
+            "thanh-toan"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    }
+  ]
+}
