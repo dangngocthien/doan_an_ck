@@ -712,6 +712,11 @@ const phieuMau: PhieuMau[] = [
   },
 ];
 
+// Ảnh mẫu nằm trong public/uploads (cùng chỗ với ảnh thợ upload thật).
+// 5 ảnh "trước" + 5 ảnh "sau", xoay vòng cho các phiếu. Tạo file bằng doi-ten-anh.ps1.
+const ANH_TRUOC = [1, 2, 3, 4, 5].map((n) => `/uploads/seed-truoc-${n}.jpg`);
+const ANH_SAU = [1, 2, 3, 4, 5].map((n) => `/uploads/seed-sau-${n}.jpg`);
+
 // ------------------------------------------------------------
 // Bước 1: xóa sạch (đúng thứ tự: bảng con trước, bảng cha sau)
 // ------------------------------------------------------------
@@ -805,7 +810,8 @@ async function main() {
 
   // --- Phiếu việc (kèm vật tư đã dùng + hóa đơn nếu đã hoàn thành) ---
   let soHoaDon = 0;
-  for (const p of phieuMau) {
+  let soAnh = 0;
+  for (const [i, p] of phieuMau.entries()) {
     const khach = khachMau[p.khach];
     const ngayTao = ngayTruoc(p.ngayTruocNgay, 8);
     const daHoanThanh = p.trang_thai === "HOAN_THANH";
@@ -838,6 +844,16 @@ async function main() {
       soHoaDon++;
     }
 
+    // Phiếu đã qua bước "Bắt đầu sửa" (Đang làm / Hoàn thành) có ảnh trước;
+    // phiếu Hoàn thành có thêm ảnh sau (đúng quy tắc nghiệp vụ)
+    const dongAnh: { loai: "TRUOC" | "SAU"; url: string }[] = [];
+    if (daHoanThanh || p.trang_thai === "DANG_LAM") {
+      dongAnh.push({ loai: "TRUOC", url: ANH_TRUOC[i % ANH_TRUOC.length] });
+    }
+    if (daHoanThanh) {
+      dongAnh.push({ loai: "SAU", url: ANH_SAU[i % ANH_SAU.length] });
+    }
+
     await prisma.phieuViec.create({
       data: {
         khach_hang_id: khachIds[p.khach],
@@ -852,8 +868,10 @@ async function main() {
         khong_dung_vat_tu: daHoanThanh && dongVatTu.length === 0,
         vat_tu_su_dung: { create: dongVatTu },
         hoa_don: hoaDon,
+        anh_phieu_viec: { create: dongAnh },
       },
     });
+    soAnh += dongAnh.length;
   }
 
   console.log("Đã nạp dữ liệu mẫu:");
@@ -866,6 +884,9 @@ async function main() {
   console.log(`  - Vật tư: ${vatTuMau.length} (1 vật tư đã ngừng kinh doanh)`);
   console.log(`  - Phiếu việc: ${phieuMau.length}`);
   console.log(`  - Hóa đơn: ${soHoaDon}`);
+  console.log(
+    `  - Ảnh phiếu việc: ${soAnh} (file nằm ở public/uploads/seed-*.jpg)`,
+  );
   console.log("Đăng nhập: admin.dienthuy@gmail.com / admin123");
   console.log(
     "           (thợ) tranvanhung@gmail.com, leminhtuan@gmail.com, nguyenhoanglong@gmail.com,",
@@ -877,7 +898,7 @@ async function main() {
     "           phamquocbao@gmail.com là thợ đã nghỉ, không đăng nhập được.",
   );
   console.log(
-    "Lưu ý: ảnh trước/sau không có trong seed — upload thật qua khu Thợ.",
+    "Lưu ý: cần có 10 file public/uploads/seed-truoc-1..5.jpg và seed-sau-1..5.jpg (chạy doi-ten-anh.ps1).",
   );
   console.log(
     "Nhà thợ trong seed có sẵn tọa độ gần đúng; thợ Đặng Thanh Phong chưa có vị trí (để test).",

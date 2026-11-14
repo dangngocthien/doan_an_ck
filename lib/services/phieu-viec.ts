@@ -141,7 +141,10 @@ async function kiemTraTho(thoId: number) {
   if (!tho || tho.vai_tro !== "THO")
     throw new LoiNghiepVu("Không tìm thấy thợ được chọn.", 400);
   if (!tho.dang_hoat_dong)
-    throw new LoiNghiepVu("Thợ này đã ngừng hoạt động, hãy chọn thợ khác.", 400);
+    throw new LoiNghiepVu(
+      "Thợ này đã ngừng hoạt động, hãy chọn thợ khác.",
+      400,
+    );
 }
 
 // ---------- Nghiệp vụ ----------
@@ -176,7 +179,8 @@ export async function taoPhieuViec(raw: DuLieuTaoPhieuViec) {
       TEN_KHACH_TOI_DA,
       `Tên khách hàng tối đa ${TEN_KHACH_TOI_DA} ký tự.`,
     );
-    const sdt = typeof raw.khach_sdt === "string" ? chuanHoaSdt(raw.khach_sdt) : null;
+    const sdt =
+      typeof raw.khach_sdt === "string" ? chuanHoaSdt(raw.khach_sdt) : null;
     if (!sdt) throw new LoiNghiepVu(LOI_SDT, 400);
     const diaChiKhach = docChuoiBatBuoc(
       raw.khach_dia_chi,
@@ -271,12 +275,12 @@ export async function capNhatPhieuViec(id: number, raw: DuLieuSuaPhieuViec) {
     );
 
   // Phiếu đã có hóa đơn thì phải giữ ở trạng thái Hoàn thành
-  if (hienTai.hoa_don && trangThai !== "HOAN_THANH")
+  // Hoàn thành là trạng thái cuối: Admin cũng không kéo ngược
+  if (hienTai.trang_thai === "HOAN_THANH" && trangThai !== "HOAN_THANH")
     throw new LoiNghiepVu(
-      `Phiếu này đã có hóa đơn #${hienTai.hoa_don.id}, không thể đổi sang trạng thái khác.`,
+      "Phiếu đã hoàn thành, không thể đổi sang trạng thái khác.",
       409,
     );
-
   // Thợ giữ nguyên (kể cả thợ đã ngừng hoạt động) thì không kiểm lại;
   // chỉ kiểm khi đổi sang thợ khác.
   if (thoId !== null && thoId !== hienTai.tho_id) await kiemTraTho(thoId);
