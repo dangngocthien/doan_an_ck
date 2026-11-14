@@ -145,7 +145,7 @@ export default async function DanhSachThoPage({
                       <Nhan kieu="off">Đã ngừng</Nhan>
                     )}
                   </TableCell>
-                  <TableCell className="text-right">
+                  <TableCell className="whitespace-nowrap text-right">
                     <div className="flex items-center justify-end gap-2">
                       <Link
                         href={`/admin/tho/${tho.id}`}
