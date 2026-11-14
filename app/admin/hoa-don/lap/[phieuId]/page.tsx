@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { docIdTrang } from "@/lib/doc-id";
@@ -32,12 +31,7 @@ export default async function TrangLapHoaDon({
   if (phieu.hoa_don) redirect(`/admin/hoa-don/${phieu.hoa_don.id}`);
 
   const khungTrang = (noiDung: ReactNode) => (
-    <div className="space-y-4">
-      <Link href="/admin/hoa-don" className="text-sm text-[var(--color-primary)] hover:underline">
-        ← Quay lại danh sách
-      </Link>
-      <Card className="max-w-2xl">{noiDung}</Card>
-    </div>
+    <Card className="max-w-2xl">{noiDung}</Card>
   );
 
   if (phieu.trang_thai !== "HOAN_THANH") {
