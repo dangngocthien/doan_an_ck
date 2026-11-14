@@ -48,7 +48,7 @@ export default async function TrangChiTietHoaDon({
 
   return (
     <Card className="max-w-2xl">
-        <CardHeader className="flex-wrap gap-3">
+        <CardHeader className="flex-wrap gap-3 pr-14 sm:pr-14">
           <div className="flex flex-wrap items-center gap-3">
             <CardTitle>Hóa đơn #{hoaDon.id}</CardTitle>
             <NhanThanhToan trangThai={hoaDon.trang_thai_thanh_toan} />
