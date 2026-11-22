@@ -101,9 +101,10 @@ export default async function DanhSachThoPage({
     <Card>
       <CardHeader>
         <CardTitle>Thợ</CardTitle>
-        <Link href="/admin/tho/moi" className={buttonVariants({ size: "sm" })}>
+        {/* eslint-disable-next-line @next/next/no-html-link-for-pages -- dùng <a>, không dùng <Link>: popup (.)tho/[id] bắt "moi" làm id rồi báo 404 */}
+        <a href="/admin/tho/moi" className={buttonVariants({ size: "sm" })}>
           + Thêm thợ
-        </Link>
+        </a>
       </CardHeader>
 
       <CardContent>

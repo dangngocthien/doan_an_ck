@@ -113,9 +113,10 @@ export default async function DanhSachKhachHangPage({
     <Card>
       <CardHeader>
         <CardTitle>Khách hàng</CardTitle>
-        <Link href="/admin/khach-hang/moi" className={buttonVariants({ size: "sm" })}>
+        {/* eslint-disable-next-line @next/next/no-html-link-for-pages -- dùng <a>, không dùng <Link>: popup (.)khach-hang/[id] bắt "moi" làm id rồi báo 404 */}
+        <a href="/admin/khach-hang/moi" className={buttonVariants({ size: "sm" })}>
           + Thêm khách hàng
-        </Link>
+        </a>
       </CardHeader>
 
       <CardContent>

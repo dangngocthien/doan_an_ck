@@ -83,12 +83,13 @@ export default async function DanhSachVatTuPage({
     <Card>
       <CardHeader>
         <CardTitle>Vật tư</CardTitle>
-        <Link
+        {/* eslint-disable-next-line @next/next/no-html-link-for-pages -- dùng <a>, không dùng <Link>: popup (.)vat-tu/[id] bắt "moi" làm id rồi báo 404 */}
+        <a
           href="/admin/vat-tu/moi"
           className={buttonVariants({ size: "sm" })}
         >
           + Thêm vật tư
-        </Link>
+        </a>
       </CardHeader>
 
       <CardContent>

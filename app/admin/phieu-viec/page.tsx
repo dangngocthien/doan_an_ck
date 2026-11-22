@@ -158,12 +158,13 @@ export default async function DanhSachPhieuViecPage({
     <Card>
       <CardHeader>
         <CardTitle>Phiếu việc</CardTitle>
-        <Link
+        {/* eslint-disable-next-line @next/next/no-html-link-for-pages -- dùng <a>, không dùng <Link>: popup (.)phieu-viec/[id] bắt "moi" làm id rồi báo 404 */}
+        <a
           href="/admin/phieu-viec/moi"
           className={buttonVariants({ size: "sm" })}
         >
           + Tạo phiếu việc
-        </Link>
+        </a>
       </CardHeader>
 
       <CardContent>
