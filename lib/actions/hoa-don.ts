@@ -2,7 +2,7 @@
 
 import { auth } from "@/auth";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
+import { redirect, RedirectType } from "next/navigation";
 import { LoiNghiepVu } from "@/lib/services/loi-nghiep-vu";
 import * as hoaDonService from "@/lib/services/hoa-don";
 
@@ -37,9 +37,11 @@ export async function lapHoaDon(
     throw e;
   }
 
-  // redirect() ném lỗi để chuyển trang nên phải đặt NGOÀI try/catch
+  // redirect() ném lỗi để chuyển trang nên phải đặt NGOÀI try/catch.
+  // replace (không phải push mặc định của Server Action): khi lập từ hộp thoại, bấm đóng chỉ cần
+  // lùi 1 bước về danh sách, không quay lại form lập vừa xong.
   revalidatePath("/admin/hoa-don");
-  redirect(`/admin/hoa-don/${hoaDonId}`);
+  redirect(`/admin/hoa-don/${hoaDonId}`, RedirectType.replace);
 }
 
 export async function doiTrangThaiThanhToan(
